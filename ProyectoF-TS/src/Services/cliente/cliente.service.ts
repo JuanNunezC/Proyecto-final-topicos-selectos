@@ -18,7 +18,7 @@ export class ClienteService {
         return this.clienteRepository.find()
     }
 
-    async getony(id:number):Promise<ClienteEntity>{
+    async getany(id:number):Promise<ClienteEntity>{
         return  await this.clienteRepository.findOne({
             where: {
                 id: id

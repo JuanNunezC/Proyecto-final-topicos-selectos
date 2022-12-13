@@ -5,5 +5,5 @@ export interface ClienteModel{
     correo: string;
     telefono: string;
     domicilio: string;
-    fechaNcimiento: Date;
+    fechaNacimiento: Date;
 }
