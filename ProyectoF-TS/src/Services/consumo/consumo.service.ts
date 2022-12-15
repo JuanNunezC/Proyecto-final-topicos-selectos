@@ -16,15 +16,19 @@ export class ConsumoService {
    async create(consumo: ConsumoModel){
         const date= new Date();
         let total=0;
-        let pagado= true
-        if(consumo.consumo>1 && consumo.consumo<101){
+        let pagado= false
+        if(consumo.consumo>0 && consumo.consumo<101){
             total= consumo.consumo*150;
-        }else if(consumo.consumo>101 && consumo.consumo<301){
+        }
+        else if(consumo.consumo>=101 && consumo.consumo<301){
+            total= consumo.consumo*170;
+        }
+        else if(consumo.consumo>=301){
             total= consumo.consumo*190;
         }
         let age;
         
-        this.cliente.getony(consumo.idCliente).then((res)=> {
+        this.cliente.getany(consumo.idCliente).then((res)=> {
             console.log(res.fechaNacimiento)
            age = this.calcularedad(res.fechaNacimiento)
         
@@ -48,21 +52,19 @@ export class ConsumoService {
         })
     }
     getmaximo(){
-        return this.consumoRepository.find(
-            {
-            relations:['idCliente','pago.idConsumo'],
-            where:{
-                consumo:MoreThan(300),
+        return this.consumoRepository.find({
+            take:1,
+            order: {
+                consumo: 'DESC'
             }
         })
     }
-    
+
     getmin(){
-        return this.consumoRepository.find(
-            {
-            relations:['idCliente','pago.idConsumo'],
-            where:{
-                consumo:LessThan(20),
+        return this.consumoRepository.find({
+            take:1,
+            order: {
+                consumo: 'ASC'
             }
         })
     }
